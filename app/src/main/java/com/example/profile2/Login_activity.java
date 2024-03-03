@@ -17,12 +17,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class signup_activity extends AppCompatActivity {
-
-    TextInputEditText editTextEmail, editTextPassword;
-    Button buttonReg;
-    Button loginNow;
+public class Login_activity extends AppCompatActivity {
+    Button button;
     FirebaseAuth mAuth;
+
     @Override
     public void onStart(){
         super.onStart();
@@ -36,52 +34,57 @@ public class signup_activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
-        editTextEmail = findViewById(R.id.editTextEmail);
-        editTextPassword = findViewById(R.id.editTextPass);
-        buttonReg = findViewById(R.id.btnSignup);
-        loginNow = findViewById(R.id.signInNow);
-        loginNow.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.activity_login);
+
+
+        TextInputEditText editTextEmail, editTextPassword;
+        button = findViewById(R.id.btnSignup);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Login_activity.class);
-                startActivity(intent);
-                finish();
+                openSignUp();
             }
         });
-
-        buttonReg.setOnClickListener(new View.OnClickListener() {
+        button = findViewById(R.id.btnLogin);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String email, password;
                 email = String.valueOf(editTextEmail.getText());
                 password = String.valueOf(editTextPassword.getText());
 
                 if (TextUtils.isEmpty(email)){
-                    Toast.makeText(signup_activity.this, "Vui lòng nhập Email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login_activity.this, "Vui lòng nhập Email", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (TextUtils.isEmpty(password)){
-                    Toast.makeText(signup_activity.this, "Vui lòng nhập mật khẩu", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login_activity.this, "Vui lòng nhập mật khẩu", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-
-                mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>(){
+                mAuth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
-                            public void onComplete(@NonNull Task<AuthResult> task){
+                            public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()){
-                                    Toast.makeText(signup_activity.this, "Tạo tài khoản thành công",
-                                            Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Login_activity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getApplicationContext(), profile_activity.class);
+                                    startActivity(intent);
+                                    finish();
                                 }
                                 else {
-                                    Toast.makeText(signup_activity.this, "Xác minh thất bại",
+                                    Toast.makeText(Login_activity.this, "Xác minh thất bại",
                                             Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
             }
         });
+    }
+
+    public void openSignUp() {
+        Intent intent = new Intent(this, signup_activity.class);
+        startActivity(intent);
     }
 }
