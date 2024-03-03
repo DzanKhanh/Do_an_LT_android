@@ -39,6 +39,12 @@
                 android:textColor="#9A9A9A"
                 android:textStyle="italic" />
 
+            <Button
+                android:id="@+id/btnSignOut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đăng xuất" />
+
         </LinearLayout>
 
     </LinearLayout>

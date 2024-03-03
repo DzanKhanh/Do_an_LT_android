@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class Login_activity extends AppCompatActivity {
     Button button;
     FirebaseAuth mAuth;
-
+    TextInputEditText editTextEmail, editTextPassword;
     @Override
     public void onStart(){
         super.onStart();
@@ -36,15 +36,6 @@ public class Login_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
-        TextInputEditText editTextEmail, editTextPassword;
-        button = findViewById(R.id.btnSignup);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openSignUp();
-            }
-        });
         button = findViewById(R.id.btnLogin);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,9 +73,5 @@ public class Login_activity extends AppCompatActivity {
             }
         });
     }
-
-    public void openSignUp() {
-        Intent intent = new Intent(this, signup_activity.class);
-        startActivity(intent);
-    }
 }
+
